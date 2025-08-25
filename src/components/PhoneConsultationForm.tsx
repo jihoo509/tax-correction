@@ -10,21 +10,24 @@ interface PhoneConsultationFormProps {
 
 export function PhoneConsultationForm({ title }: PhoneConsultationFormProps) {
   const [formData, setFormData] = useState({
-    // 기존 필드
-    name: '', // 대표자 이름으로 사용
+    // ✨ 다시 추가된 필드
+    name: '', // 대표자 이름
+    birthDate: '',
+    gender: '',
     phoneNumber: '',
     agreedToTerms: false,
 
-    // ✨ 경정청구용 새 필드
+    // 경정청구용 필드
     companyName: '',
     businessNumber: '',
-    isFirstStartup: '', // '예' | '아니오'
-    hasPastClaim: '',   // '예' | '아니오'
+    isFirstStartup: '',
+    hasPastClaim: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPrivacyDialog, setShowPrivacyDialog] = useState(false);
 
   const nameInputRef = useRef<HTMLInputElement>(null);
+  const birthDateInputRef = useRef<HTMLInputElement>(null);
   const phoneNumberInputRef = useRef<HTMLInputElement>(null);
 
   const handleInputFocus = (inputRef: React.RefObject<HTMLInputElement>) => {
@@ -42,6 +45,8 @@ export function PhoneConsultationForm({ title }: PhoneConsultationFormProps) {
   const resetForm = () =>
     setFormData({
       name: '',
+      birthDate: '',
+      gender: '',
       phoneNumber: '',
       agreedToTerms: false,
       companyName: '',
@@ -62,15 +67,16 @@ export function PhoneConsultationForm({ title }: PhoneConsultationFormProps) {
       const payload = {
         type: 'phone' as const,
         site: '경정청구',
-        name: formData.name.trim(), // 대표자 이름
+        name: formData.name.trim(),
         phone: `010-${(formData.phoneNumber || '').trim()}`,
+        // ✨ 다시 추가된 필드
+        birth: formData.birthDate.trim(),
+        gender: formData.gender as '남' | '여' | '',
         
-        // ✨ 경정청구 데이터 추가
         companyName: formData.companyName.trim(),
         businessNumber: formData.businessNumber.trim(),
         isFirstStartup: formData.isFirstStartup,
         hasPastClaim: formData.hasPastClaim,
-
         requestedAt: kstDate.toISOString(),
       };
 
@@ -116,6 +122,24 @@ export function PhoneConsultationForm({ title }: PhoneConsultationFormProps) {
             <label className="text-white text-base block">대표자 이름</label>
             <Input ref={nameInputRef} placeholder="대표자 성함을 입력" value={formData.name} onChange={e => handleInputChange('name', e.target.value)} onFocus={() => handleInputFocus(nameInputRef)} className="bg-white border-0 h-12 text-gray-800 placeholder:text-gray-500" required />
           </div>
+          {/* ✨ 다시 추가된 폼 */}
+          <div className="space-y-2">
+            <label className="text-white text-base block">생년월일</label>
+            <Input ref={birthDateInputRef} placeholder="생년월일 8자리 (예:19850101)" value={formData.birthDate} onChange={e => handleInputChange('birthDate', e.target.value)} onFocus={() => handleInputFocus(birthDateInputRef)} className="bg-white border-0 h-12 text-gray-800 placeholder:text-gray-500" maxLength={8} required />
+          </div>
+          <div className="space-y-2">
+            <label className="text-white text-base block">성별</label>
+            <div className="flex h-12 bg-white rounded-md overflow-hidden">
+              <Button type="button" onClick={() => handleInputChange('gender', '남')} className={`flex-1 flex items-center justify-center space-x-2 rounded-none h-full border-0 ${formData.gender === '남' ? 'bg-[#f59e0b] text-white' : 'bg-white text-gray-600'}`}>
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center ${formData.gender === '남' ? 'bg-orange-400' : 'bg-gray-300'}`}>👨</div>
+                <span>남</span>
+              </Button>
+              <Button type="button" onClick={() => handleInputChange('gender', '여')} className={`flex-1 flex items-center justify-center space-x-2 rounded-none h-full border-0 ${formData.gender === '여' ? 'bg-[#f59e0b] text-white' : 'bg-white text-gray-600'}`}>
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center ${formData.gender === '여' ? 'bg-orange-400' : 'bg-gray-300'}`}>👩</div>
+                <span>여</span>
+              </Button>
+            </div>
+          </div>
           <div className="space-y-2">
             <label className="text-white text-base block">전화번호</label>
             <div className="flex space-x-2">
@@ -124,6 +148,9 @@ export function PhoneConsultationForm({ title }: PhoneConsultationFormProps) {
               <Input ref={phoneNumberInputRef} placeholder="휴대폰번호 8자리" value={formData.phoneNumber} onChange={e => handleInputChange('phoneNumber', e.target.value)} onFocus={() => handleInputFocus(phoneNumberInputRef)} className="bg-white border-0 h-12 text-gray-800 placeholder:text-gray-500 flex-1" maxLength={8} required />
             </div>
           </div>
+
+          <hr className="border-white/20 my-4" />
+
           <div className="space-y-2">
             <label className="text-white text-base block">사업자명</label>
             <Input placeholder="사업자명을 입력" value={formData.companyName} onChange={e => handleInputChange('companyName', e.target.value)} className="bg-white border-0 h-12 text-gray-800 placeholder:text-gray-500" required />
@@ -155,7 +182,8 @@ export function PhoneConsultationForm({ title }: PhoneConsultationFormProps) {
             <Button type="button" variant="outline" size="sm" onClick={() => setShowPrivacyDialog(true)} className="bg-white text-gray-800 border-white">자세히 보기</Button>
           </div>
           <div className="pt-2">
-            <Button type="submit" disabled={!formData.name || !formData.phoneNumber || !formData.companyName || !formData.businessNumber || !formData.isFirstStartup || !formData.hasPastClaim || !formData.agreedToTerms || isSubmitting} className="w-full h-14 bg-[#f59e0b] hover:bg-[#d97706] text-white text-xl disabled:opacity-50">
+            {/* ✨ 다시 추가된 필드 */}
+            <Button type="submit" disabled={!formData.name || !formData.birthDate || !formData.gender || !formData.phoneNumber || !formData.companyName || !formData.businessNumber || !formData.isFirstStartup || !formData.hasPastClaim || !formData.agreedToTerms || isSubmitting} className="w-full h-14 bg-[#f59e0b] hover:bg-[#d97706] text-white text-xl disabled:opacity-50">
               {isSubmitting ? '신청 중...' : '전화상담 신청하기'}
             </Button>
           </div>

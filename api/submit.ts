@@ -8,7 +8,13 @@ type SubmitBody = {
   name?: string;
   phone?: string;
   
-  // ✨ 경정청구 필드
+  // ✨ 다시 추가된 필드
+  birth?: string;
+  rrnFront?: string;
+  rrnBack?: string;
+  gender?: '남' | '여';
+
+  // 경정청구 필드
   companyName?: string;
   businessNumber?: string;
   isFirstStartup?: string;
@@ -38,6 +44,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     site = 'unknown',
     name = '',
     companyName = '',
+    // ✨ 다시 추가된 필드
+    gender,
+    birth,
+    rrnFront,
+    rrnBack,
   } = body;
 
 
@@ -46,8 +57,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   const requestKo = type === 'phone' ? '전화' : '온라인';
-  // ✨ 제목 생성 로직 수정: 대표자이름(사업자명)
-  const title = `[${requestKo}] ${name}(${companyName || '사업자명 미입력'}) / ${site}`;
+  
+  // ✨ 다시 추가된 필드
+  const birth6 = type === 'phone' ? (birth || '') : (rrnFront || '');
+  const rrnFull = type === 'online' && rrnFront && rrnBack ? `${rrnFront}-${rrnBack}` : '';
+  const masked = rrnFull ? `${rrnFull.slice(0, 8)}******` : (birth6 ? `${birth6}-*******` : '');
+
+  // ✨ 제목 생성 로직 수정
+  const title = `[${requestKo}] ${name}(${companyName || '사업자명 미입력'}) / ${masked}`;
   
   const labels = [`type:${type}`, `site:${site}`];
 

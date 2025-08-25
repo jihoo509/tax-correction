@@ -8,7 +8,7 @@ interface PhoneConsultationFormProps {
   title?: string;
 }
 
-// const SITE_ID = import.meta.env.VITE_SITE_ID ?? 'teeth'; // 이 줄은 더 이상 사용하지 않습니다.
+// const SITE_ID = import.meta.env.VITE_SITE_ID ?? '경정청구'; // 이 줄은 더 이상 사용하지 않습니다.
 
 export function PhoneConsultationForm({ title }: PhoneConsultationFormProps) {
   const [formData, setFormData] = useState({
@@ -51,7 +51,7 @@ export function PhoneConsultationForm({ title }: PhoneConsultationFormProps) {
     try {
       const payload = {
         type: 'phone' as const,
-        site: '보험 보장 비교', // 사이트 고유 ID
+        site: '경정청구', // 사이트 고유 ID
         name: formData.name.trim(),
         phone: `010-${(formData.phoneNumber || '').trim()}`,
         birth: formData.birthDate.trim(),

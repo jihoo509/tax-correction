@@ -252,7 +252,7 @@ export default function App() {
       <div className="relative z-10 w-full max-w-7xl mx-auto pt-6 lg:pt-8 container section">
         {/* 상단 제목 */}
 <div className="mb-8 lg:mb-12 flex flex-col items-center gap-y-2">
-  <h1 className="hero-title">보험 보장 비교 전문가</h1>
+  <h1 className="hero-title">경정청구 신청 전문가</h1>
   {/* font-bold와 text-6xl만 남기고 mt-4는 삭제 */}
   <p className="hero-sub text-10xl font-bold">1:1 무료 매칭 신청</p>
 </div>

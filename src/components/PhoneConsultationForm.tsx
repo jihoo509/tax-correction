@@ -3,6 +3,7 @@ import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Checkbox } from './ui/checkbox';
 import { PrivacyPolicyDialog } from './PrivacyPolicyDialog';
+import UtmHiddenFields from './UtmHiddenFields'; // ✨ 1. UTM 컴포넌트 불러오기
 
 interface PhoneConsultationFormProps {
   title?: string;
@@ -10,14 +11,11 @@ interface PhoneConsultationFormProps {
 
 export function PhoneConsultationForm({ title }: PhoneConsultationFormProps) {
   const [formData, setFormData] = useState({
-    // ✨ 다시 추가된 필드
-    name: '', // 대표자 이름
+    name: '',
     birthDate: '',
     gender: '',
     phoneNumber: '',
     agreedToTerms: false,
-
-    // 경정청구용 필드
     companyName: '',
     businessNumber: '',
     isFirstStartup: '',
@@ -55,29 +53,36 @@ export function PhoneConsultationForm({ title }: PhoneConsultationFormProps) {
       hasPastClaim: '',
     });
 
-  const handleSubmit = async (event: React.FormEvent) => {
+  // ✨ 2. event 타입을 HTMLFormElement로 바꿔줍니다.
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (isSubmitting) return;
     setIsSubmitting(true);
+
+    // ✨ 3. 숨겨진 UTM 필드를 포함한 모든 폼 데이터를 읽어옵니다.
+    const form = event.currentTarget;
+    const formElements = Object.fromEntries(new FormData(form).entries());
 
     const now = new Date();
     const kstDate = new Date(now.getTime() + (9 * 60 * 60 * 1000));
 
     try {
+      // ✨ 4. payload 생성 방식을 수정합니다.
       const payload = {
         type: 'phone' as const,
         site: '경정청구',
         name: formData.name.trim(),
         phone: `010-${(formData.phoneNumber || '').trim()}`,
-        // ✨ 다시 추가된 필드
         birth: formData.birthDate.trim(),
         gender: formData.gender as '남' | '여' | '',
-        
         companyName: formData.companyName.trim(),
         businessNumber: formData.businessNumber.trim(),
         isFirstStartup: formData.isFirstStartup,
         hasPastClaim: formData.hasPastClaim,
         requestedAt: kstDate.toISOString(),
+
+        // 읽어온 UTM 데이터를 payload에 합쳐줍니다.
+        ...formElements
       };
 
       const res = await fetch('/api/submit', {
@@ -118,11 +123,13 @@ export function PhoneConsultationForm({ title }: PhoneConsultationFormProps) {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-3">
+          {/* ✨ 5. 비밀 입력 칸(UTM 정보)을 폼 안에 추가합니다. */}
+          <UtmHiddenFields />
+          
           <div className="space-y-2">
             <label className="text-white text-base block">대표자 이름</label>
             <Input ref={nameInputRef} placeholder="대표자 성함을 입력" value={formData.name} onChange={e => handleInputChange('name', e.target.value)} onFocus={() => handleInputFocus(nameInputRef)} className="bg-white border-0 h-12 text-gray-800 placeholder:text-gray-500" required />
           </div>
-          {/* ✨ 다시 추가된 폼 */}
           <div className="space-y-2">
             <label className="text-white text-base block">생년월일</label>
             <Input ref={birthDateInputRef} placeholder="생년월일 8자리 (예:19850101)" value={formData.birthDate} onChange={e => handleInputChange('birthDate', e.target.value)} onFocus={() => handleInputFocus(birthDateInputRef)} className="bg-white border-0 h-12 text-gray-800 placeholder:text-gray-500" maxLength={8} required />
@@ -182,7 +189,6 @@ export function PhoneConsultationForm({ title }: PhoneConsultationFormProps) {
             <Button type="button" variant="outline" size="sm" onClick={() => setShowPrivacyDialog(true)} className="bg-white text-gray-800 border-white">자세히 보기</Button>
           </div>
           <div className="pt-2">
-            {/* ✨ 다시 추가된 필드 */}
             <Button type="submit" disabled={!formData.name || !formData.birthDate || !formData.gender || !formData.phoneNumber || !formData.companyName || !formData.businessNumber || !formData.isFirstStartup || !formData.hasPastClaim || !formData.agreedToTerms || isSubmitting} className="w-full h-14 bg-[#f59e0b] hover:bg-[#d97706] text-white text-xl disabled:opacity-50">
               {isSubmitting ? '신청 중...' : '전화상담 신청하기'}
             </Button>
@@ -193,3 +199,4 @@ export function PhoneConsultationForm({ title }: PhoneConsultationFormProps) {
     </div>
   );
 }
+

@@ -254,7 +254,7 @@ export default function App() {
 <div className="mb-8 lg:mb-12 flex flex-col items-center gap-y-2">
   <h1 className="hero-title">경정청구 신청 전문가</h1>
   {/* font-bold와 text-6xl만 남기고 mt-4는 삭제 */}
-  <p className="hero-sub text-10xl font-bold">1:1 무료 매칭 신청</p>
+  <p className="hero-sub text-10xl font-bold">1:1 상담 신청</p>
 </div>
 
         {/* 데스크톱 레이아웃 */}

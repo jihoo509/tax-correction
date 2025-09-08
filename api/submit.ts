@@ -68,7 +68,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   
   const birth6 = type === 'phone' ? (birth || '') : (rrnFront || '');
   const rrnFull = type === 'online' && rrnFront && rrnBack ? `${rrnFront}-${rrnBack}` : '';
-  const masked = rrnFull ? `${rrnFull.slice(0, 8)}******` : (birth6 ? `${birth6}-*******` : '');
+  const title = `[${requestKo}] ${name || '이름 미입력'} / ${gender || '성별 미선택'} / ${masked} / ${body.phone || '전화번호 미입력'}`;
 
   const title = `[${requestKo}] ${name}(${companyName || '사업자명 미입력'}) / ${masked}`;
   

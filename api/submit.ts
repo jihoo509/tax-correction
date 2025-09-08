@@ -18,7 +18,7 @@ type SubmitBody = {
   businessNumber?: string;
   isFirstStartup?: string;
   hasPastClaim?: string;
-  
+
   // UTM 필드
   utm_source?: string;
   utm_medium?: string;
@@ -54,11 +54,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     site = 'unknown',
     name = '',
     companyName = '',
-    gender,
     birth,
     rrnFront,
     rrnBack,
   } = body;
+
 
   if (!type || (type !== 'phone' && type !== 'online')) {
     return res.status(400).json({ ok: false, error: 'Invalid type' });
@@ -68,19 +68,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   
   const birth6 = type === 'phone' ? (birth || '') : (rrnFront || '');
   const rrnFull = type === 'online' && rrnFront && rrnBack ? `${rrnFront}-${rrnBack}` : '';
-  const title = `[${requestKo}] ${name || '이름 미입력'} / ${gender || '성별 미선택'} / ${masked} / ${body.phone || '전화번호 미입력'}`;
+  const masked = rrnFull ? `${rrnFull.slice(0, 8)}******` : (birth6 ? `${birth6}-*******` : '');
 
   const title = `[${requestKo}] ${name}(${companyName || '사업자명 미입력'}) / ${masked}`;
   
   const labels = [`type:${type}`, `site:${site}`];
 
-  // ✨ 2. payload 생성 방식은 이미 모든 body 데이터를 포함하므로 수정할 필요가 없습니다.
-  const payload = { 
-    ...body, 
+  // ✨ 2. payload 생성 방식을 수정하여, form에서 보낸 모든 정보(UTM 포함)를 받도록 합니다.
+  const payload = {
+    ...body, // form에서 보낸 모든 데이터를 그대로 포함
     requestedAt: new Date().toISOString(),
     ua: (req.headers['user-agent'] || '').toString().slice(0, 200),
     ip: (req.headers['x-forwarded-for'] || req.socket.remoteAddress || '').toString(),
   };
+  
   delete (payload as any).headers;
 
   const bodyMd = '```json\n' + JSON.stringify(payload, null, 2) + '\n```';

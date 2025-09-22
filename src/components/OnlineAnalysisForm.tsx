@@ -188,6 +188,7 @@ export function OnlineAnalysisForm({ title }: OnlineAnalysisFormProps) {
                 <label className="text-white text-base block">사업자번호</label>
                 <Input placeholder="'-' 없이 10자리 입력" value={formData.businessNumber} onChange={e => handleInputChange('businessNumber', e.target.value)} className="bg-white border-0 h-12 text-gray-800 placeholder:text-gray-500" maxLength={10} required />
               </div>
+              {/* ✨ 수정: '예/아니오' 버튼 디자인을 전화상담 폼과 동일하게 수정 */}
               <div className="space-y-2">
                 <label className="text-white text-base block">최초 창업 여부</label>
                 <div className="flex h-12 bg-white rounded-md overflow-hidden border border-gray-200">
@@ -208,7 +209,7 @@ export function OnlineAnalysisForm({ title }: OnlineAnalysisFormProps) {
           </div>
           
           <div className="space-y-2 pt-2">
-            <label className="text-white text-base block">문의사항</label>
+            <label className="text-white text-base block">문의사항 (선택)</label>
             <Textarea placeholder="궁금한 점이나 특별히 원하는 점이 있다면 자유롭게 적어주세요." value={formData.notes} onChange={e => handleInputChange('notes', e.target.value)} className="bg-white border-0 text-gray-800 placeholder:text-gray-500" rows={3}/>
           </div>
 

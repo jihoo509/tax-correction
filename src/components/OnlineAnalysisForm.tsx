@@ -153,7 +153,7 @@ export function OnlineAnalysisForm({ title }: OnlineAnalysisFormProps) {
           </div>
           <div className="space-y-2">
             <label className="text-white text-base block">생년월일</label>
-            <Input ref={birthDateInputRef} placeholder="생년월일 8자리 (예: 19850101)" value={formData.birthDate} onChange={e => handleInputChange('birthDate', e.target.value)} onFocus={() => handleInputFocus(birthDateInputRef)} className="bg-white border-0 h-12 text-gray-800 placeholder:text-gray-500" maxLength={8} required />
+            <Input ref={birthDateInputRef} placeholder="생년월일 8자리 (예:19850101)" value={formData.birthDate} onChange={e => handleInputChange('birthDate', e.target.value)} onFocus={() => handleInputFocus(birthDateInputRef)} className="bg-white border-0 h-12 text-gray-800 placeholder:text-gray-500" maxLength={8} required />
           </div>
           <div className="space-y-2">
             <label className="text-white text-base block">성별</label>
@@ -208,7 +208,7 @@ export function OnlineAnalysisForm({ title }: OnlineAnalysisFormProps) {
           </div>
           
           <div className="space-y-2 pt-2">
-            <label className="text-white text-base block">문의사항 (선택)</label>
+            <label className="text-white text-base block">문의사항</label>
             <Textarea placeholder="궁금한 점이나 특별히 원하는 점이 있다면 자유롭게 적어주세요." value={formData.notes} onChange={e => handleInputChange('notes', e.target.value)} className="bg-white border-0 text-gray-800 placeholder:text-gray-500" rows={3}/>
           </div>
 

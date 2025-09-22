@@ -188,19 +188,20 @@ export function OnlineAnalysisForm({ title }: OnlineAnalysisFormProps) {
                 <label className="text-white text-base block">사업자번호</label>
                 <Input placeholder="'-' 없이 10자리 입력" value={formData.businessNumber} onChange={e => handleInputChange('businessNumber', e.target.value)} className="bg-white border-0 h-12 text-gray-800 placeholder:text-gray-500" maxLength={10} required />
               </div>
-              {/* ✨ 수정: '예/아니오' 버튼 디자인 개선 */}
               <div className="space-y-2">
                 <label className="text-white text-base block">최초 창업 여부</label>
-                <div className="flex h-12 items-center gap-1 bg-white rounded-md p-1">
-                  <Button type="button" onClick={() => handleInputChange('isFirstStartup', '예')} className={`flex-1 rounded h-full border-0 transition-all ${formData.isFirstStartup === '예' ? 'bg-[#f59e0b] text-white shadow' : 'bg-white text-gray-600 hover:bg-gray-100'}`}>예</Button>
-                  <Button type="button" onClick={() => handleInputChange('isFirstStartup', '아니오')} className={`flex-1 rounded h-full border-0 transition-all ${formData.isFirstStartup === '아니오' ? 'bg-[#f59e0b] text-white shadow' : 'bg-white text-gray-600 hover:bg-gray-100'}`}>아니오</Button>
+                <div className="flex h-12 bg-white rounded-md overflow-hidden border border-gray-200">
+                  <Button type="button" onClick={() => handleInputChange('isFirstStartup', '예')} className={`flex-1 rounded-none h-full border-0 ${formData.isFirstStartup === '예' ? 'bg-[#f59e0b] text-white hover:bg-[#d97706]' : 'bg-white text-gray-600 hover:bg-gray-50'}`}>예</Button>
+                  <div className="w-px bg-gray-200" />
+                  <Button type="button" onClick={() => handleInputChange('isFirstStartup', '아니오')} className={`flex-1 rounded-none h-full border-0 ${formData.isFirstStartup === '아니오' ? 'bg-[#f59e0b] text-white hover:bg-[#d97706]' : 'bg-white text-gray-600 hover:bg-gray-50'}`}>아니오</Button>
                 </div>
               </div>
               <div className="space-y-2">
                 <label className="text-white text-base block">과거 경정청구 진행 여부</label>
-                <div className="flex h-12 items-center gap-1 bg-white rounded-md p-1">
-                  <Button type="button" onClick={() => handleInputChange('hasPastClaim', '예')} className={`flex-1 rounded h-full border-0 transition-all ${formData.hasPastClaim === '예' ? 'bg-[#f59e0b] text-white shadow' : 'bg-white text-gray-600 hover:bg-gray-100'}`}>예</Button>
-                  <Button type="button" onClick={() => handleInputChange('hasPastClaim', '아니오')} className={`flex-1 rounded h-full border-0 transition-all ${formData.hasPastClaim === '아니오' ? 'bg-[#f59e0b] text-white shadow' : 'bg-white text-gray-600 hover:bg-gray-100'}`}>아니오</Button>
+                <div className="flex h-12 bg-white rounded-md overflow-hidden border border-gray-200">
+                  <Button type="button" onClick={() => handleInputChange('hasPastClaim', '예')} className={`flex-1 rounded-none h-full border-0 ${formData.hasPastClaim === '예' ? 'bg-[#f59e0b] text-white hover:bg-[#d97706]' : 'bg-white text-gray-600 hover:bg-gray-50'}`}>예</Button>
+                  <div className="w-px bg-gray-200" />
+                  <Button type="button" onClick={() => handleInputChange('hasPastClaim', '아니오')} className={`flex-1 rounded-none h-full border-0 ${formData.hasPastClaim === '아니오' ? 'bg-[#f59e0b] text-white hover:bg-[#d97706]' : 'bg-white text-gray-600 hover:bg-gray-50'}`}>아니오</Button>
                 </div>
               </div>
             </div>

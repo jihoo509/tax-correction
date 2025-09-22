@@ -190,7 +190,6 @@ export function OnlineAnalysisForm({ title }: OnlineAnalysisFormProps) {
               </div>
               <div className="space-y-2">
                 <label className="text-white text-base block">최초 창업 여부</label>
-                {/* ✨ 수정: '예/아니오' 버튼 디자인을 전화상담 폼과 동일하게 수정 */}
                 <div className="flex h-12 bg-white rounded-md overflow-hidden border border-gray-200">
                   <Button type="button" onClick={() => handleInputChange('isFirstStartup', '예')} className={`flex-1 rounded-none h-full border-0 ${formData.isFirstStartup === '예' ? 'bg-[#f59e0b] text-white hover:bg-[#d97706]' : 'bg-white text-gray-600 hover:bg-gray-50'}`}>예</Button>
                   <div className="w-px bg-gray-200" />

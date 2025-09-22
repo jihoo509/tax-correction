@@ -6,7 +6,7 @@ import { PrivacyPolicyDialog } from './PrivacyPolicyDialog';
 import UtmHiddenFields from './UtmHiddenFields';
 import { ContentType } from '../lib/policyContents';
 import { Textarea } from './ui/textarea';
-import { User, Briefcase } from 'lucide-react'; // ✨ 아이콘 변경
+import { User, Briefcase } from 'lucide-react';
 
 interface PhoneConsultationFormProps {
   title?: string;
@@ -132,7 +132,6 @@ export function PhoneConsultationForm({ title }: PhoneConsultationFormProps) {
         style={{ boxShadow: `0 25px 50px -12px rgba(0, 0, 0, 0.4)` }}
       >
         <div className="text-center space-y-1.5 mb-5">
-          {/* ✨ 경정청구 텍스트로 변경 */}
           <p className="text-white text-[22px] md:text-2xl font-extrabold tracking-tight">세무 전문가가 유선상으로</p>
           <p className="text-[22px] md:text-2xl font-black bg-gradient-to-b from-[#FFB648] to-[#FF7A3D] bg-clip-text text-transparent">환급액 조회를 도와드립니다.</p>
           {title && <p className="mt-2 text-white/85 text-[13px] md:text-sm">{title}</p>}
@@ -191,15 +190,17 @@ export function PhoneConsultationForm({ title }: PhoneConsultationFormProps) {
               </div>
               <div className="space-y-2">
                 <label className="text-white text-base block">최초 창업 여부</label>
-                <div className="flex h-12 bg-white rounded-md overflow-hidden">
+                <div className="flex h-12 bg-white rounded-md overflow-hidden border border-gray-200">
                   <Button type="button" onClick={() => handleInputChange('isFirstStartup', '예')} className={`flex-1 rounded-none h-full border-0 ${formData.isFirstStartup === '예' ? 'bg-[#f59e0b] text-white hover:bg-[#d97706]' : 'bg-white text-gray-600 hover:bg-gray-50'}`}>예</Button>
+                  <div className="w-px bg-gray-200" />
                   <Button type="button" onClick={() => handleInputChange('isFirstStartup', '아니오')} className={`flex-1 rounded-none h-full border-0 ${formData.isFirstStartup === '아니오' ? 'bg-[#f59e0b] text-white hover:bg-[#d97706]' : 'bg-white text-gray-600 hover:bg-gray-50'}`}>아니오</Button>
                 </div>
               </div>
               <div className="space-y-2">
                 <label className="text-white text-base block">과거 경정청구 진행 여부</label>
-                <div className="flex h-12 bg-white rounded-md overflow-hidden">
+                <div className="flex h-12 bg-white rounded-md overflow-hidden border border-gray-200">
                   <Button type="button" onClick={() => handleInputChange('hasPastClaim', '예')} className={`flex-1 rounded-none h-full border-0 ${formData.hasPastClaim === '예' ? 'bg-[#f59e0b] text-white hover:bg-[#d97706]' : 'bg-white text-gray-600 hover:bg-gray-50'}`}>예</Button>
+                  <div className="w-px bg-gray-200" />
                   <Button type="button" onClick={() => handleInputChange('hasPastClaim', '아니오')} className={`flex-1 rounded-none h-full border-0 ${formData.hasPastClaim === '아니오' ? 'bg-[#f59e0b] text-white hover:bg-[#d97706]' : 'bg-white text-gray-600 hover:bg-gray-50'}`}>아니오</Button>
                 </div>
               </div>
@@ -207,7 +208,7 @@ export function PhoneConsultationForm({ title }: PhoneConsultationFormProps) {
           </div>
           
           <div className="space-y-2 pt-2">
-            <label className="text-white text-base block">문의사항</label>
+            <label className="text-white text-base block">문의사항 (선택)</label>
             <Textarea placeholder="궁금한 점이나 특별히 원하는 점이 있다면 자유롭게 적어주세요." value={formData.notes} onChange={e => handleInputChange('notes', e.target.value)} className="bg-white border-0 text-gray-800 placeholder:text-gray-500" rows={3}/>
           </div>
 

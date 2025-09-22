@@ -209,7 +209,7 @@ export function OnlineAnalysisForm({ title }: OnlineAnalysisFormProps) {
           </div>
           
           <div className="space-y-2 pt-2">
-            <label className="text-white text-base block">문의사항 (선택)</label>
+            <label className="text-white text-base block">문의사항</label>
             <Textarea placeholder="궁금한 점이나 특별히 원하는 점이 있다면 자유롭게 적어주세요." value={formData.notes} onChange={e => handleInputChange('notes', e.target.value)} className="bg-white border-0 text-gray-800 placeholder:text-gray-500" rows={3}/>
           </div>
 

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import primeAssetLogo from '../assets/prime-asset-logo.png';
 import { PrivacyPolicyFullDialog } from './PrivacyPolicyFullDialog'; 
 import { Button } from './ui/button';
 
@@ -10,30 +9,17 @@ export function Footer() {
     <>
       <footer className="w-full mt-16 lg:mt-24 relative z-10">
         <div className="bg-black bg-opacity-20 border-t border-white/10">
-          <div className="w-full max-w-5xl mx-auto py-10 px-6">
+          <div className="w-full max-w-5xl mx-auto py-8 px-6">
             
-            <div className="flex items-center justify-between gap-4">
-              <div className="flex items-center gap-4">
-                <div className="bg-white p-2 rounded-md shadow-sm">
-                  <img 
-                    src={primeAssetLogo} 
-                    alt="프라임에셋 로고" 
-                    className="h-8"
-                  />
-                </div>
-                <div>
-                  <p className="font-semibold text-white text-lg"></p>
-                </div>
-              </div>
-              <div>
-                <Button 
-                  variant="link" 
-                  onClick={() => setIsPolicyDialogOpen(true)}
-                  className="text-white/70 hover:text-white underline hover:no-underline"
-                >
-                  개인정보 처리방침
-                </Button>
-              </div>
+            {/* ✨ 수정: 로고를 삭제하고 개인정보 처리방침 버튼만 남깁니다. */}
+            <div className="flex items-center justify-start">
+              <Button 
+                variant="link" 
+                onClick={() => setIsPolicyDialogOpen(true)}
+                className="text-white/70 hover:text-white underline hover:no-underline p-0"
+              >
+                개인정보 처리방침
+              </Button>
             </div>
 
             <hr className="my-6 border-white/20" />
